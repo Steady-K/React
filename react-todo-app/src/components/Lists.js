@@ -1,22 +1,9 @@
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import React from 'react';
+import List from './List';
 
-export default function Lists({ todoData, setTodoData }) {
-  const handleClick = (id) => {
-    let newTodoData = todoData.filter((data) => data.id !== id);
-    console.log('newTodoData', newTodoData);
-    setTodoData(newTodoData);
-  };
-
-  const handleCompleteChange = (id) => {
-    let newTodoData = todoData.map((data) => {
-      if (data.id === id) {
-        data.completed = !data.completed;
-      }
-      return data;
-    });
-    setTodoData(newTodoData);
-  };
+const Lists = React.memo(({ todoData, setTodoData, handleClick }) => {
+  console.log('Lists Component');
 
   const handleEnd = (result) => {
     console.log(result);
@@ -34,7 +21,6 @@ export default function Lists({ todoData, setTodoData }) {
     newTodoData.splice(result.destination.index, 0, reorderedItem);
     setTodoData(newTodoData);
   };
-
   return (
     <div>
       <DragDropContext onDragEnd={handleEnd}>
@@ -48,41 +34,17 @@ export default function Lists({ todoData, setTodoData }) {
                   index={index}
                 >
                   {(provided, snapshot) => (
-                    <div
+                    <List
+                      handleClick={handleClick}
                       key={data.id}
-                      {...provided.draggableProps}
-                      ref={provided.innerRef}
-                      {...provided.dragHandleProps}
-                    >
-                      <div
-                        className={`${
-                          snapshot.isDragging ? 'bg-gray-400' : 'bg-gray-100'
-                        } flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 bg-gray-50 border rounded`}
-                      >
-                        <div className="items-center">
-                          <input
-                            type="checkbox"
-                            onChange={() => handleCompleteChange(data.id)}
-                            checked={data.completed}
-                          />
-                          <span
-                            className={
-                              data.completed ? 'line-through' : undefined
-                            }
-                          >
-                            {data.title}
-                          </span>
-                        </div>
-                        <div>
-                          <button
-                            className="px-4 py-2 float-right"
-                            onClick={() => handleClick(data.id)}
-                          >
-                            x
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+                      id={data.id}
+                      title={data.title}
+                      completed={data.completed}
+                      todoData={todoData}
+                      setTodoData={setTodoData}
+                      provided={provided}
+                      snapshot={snapshot}
+                    />
                   )}
                 </Draggable>
               ))}
@@ -93,4 +55,6 @@ export default function Lists({ todoData, setTodoData }) {
       </DragDropContext>
     </div>
   );
-}
+});
+
+export default Lists;

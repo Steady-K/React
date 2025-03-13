@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import './App.css';
 import Lists from './components/Lists.js';
 import Form from './components/Form.js';
 
 export default function App() {
+  console.log('App Component');
   const [todoData, setTodoData] = useState([]); // 초기값은 빈 배열로 설정
   const [value, setValue] = useState('');
+
+  const handleClick = useCallback(
+    (id) => {
+      let newTodoData = todoData.filter((data) => data.id !== id);
+      console.log('newTodoData', newTodoData);
+      setTodoData(newTodoData);
+    },
+    [todoData]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +41,11 @@ export default function App() {
         </div>
 
         {/* Lists 컴포넌트에 todoData와 setTodoData를 전달 */}
-        <Lists todoData={todoData} setTodoData={setTodoData} />
+        <Lists
+          handleClick={handleClick}
+          todoData={todoData}
+          setTodoData={setTodoData}
+        />
         <Form value={value} setValue={setValue} handleSubmit={handleSubmit} />
       </div>
     </div>
