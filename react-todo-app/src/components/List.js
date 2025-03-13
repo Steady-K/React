@@ -34,23 +34,21 @@ export default function List({ todoData, setTodoData }) {
     setTodoData(newTodoData);
   };
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
-  {
-    todoData.map((data) => (
-      <div style={getStyle(data.completed)} key={data.id}>
-        <input
-          type="checkbox"
-          onChange={() => handleCompleteChange(data.id)}
-          defaultChecked={false}
-        />
-        {data.title}
-        <button style={btnStyle} onClick={() => handleClick(data.id)}>
-          x
-        </button>
-      </div>
-    ));
-  }
+  return (
+    <div>
+      {todoData.map((data) => (
+        <div style={getStyle(data.completed)} key={data.id}>
+          <input
+            type="checkbox"
+            onChange={() => handleCompleteChange(data.id)}
+            checked={data.completed}
+          />
+          {data.title}
+          <button style={btnStyle} onClick={() => handleClick(data.id)}>
+            x
+          </button>
+        </div>
+      ))}
+    </div>
+  );
 }
