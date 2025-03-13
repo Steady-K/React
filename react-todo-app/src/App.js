@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import List from './components/List.js';
+import Lists from './components/Lists.js';
 import Form from './components/Form.js';
 
 export default function App() {
@@ -30,8 +30,8 @@ export default function App() {
           <button onClick={() => setTodoData([])}>전체 삭제</button>
         </div>
 
-        {/* List 컴포넌트에 todoData와 setTodoData를 전달 */}
-        <List todoData={todoData} setTodoData={setTodoData} />
+        {/* Lists 컴포넌트에 todoData와 setTodoData를 전달 */}
+        <Lists todoData={todoData} setTodoData={setTodoData} />
         <Form value={value} setValue={setValue} handleSubmit={handleSubmit} />
       </div>
     </div>

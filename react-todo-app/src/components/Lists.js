@@ -1,7 +1,7 @@
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import React from 'react';
 
-export default function List({ todoData, setTodoData }) {
+export default function Lists({ todoData, setTodoData }) {
   const handleClick = (id) => {
     let newTodoData = todoData.filter((data) => data.id !== id);
     console.log('newTodoData', newTodoData);
